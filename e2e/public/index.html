@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+  <title>End to End JavaScript</title>
+
+  <script src="jquery.js"></script>
+  <script>
+    $(function () {
+      loadUsers();
+      
+      $('body').on( 'click', '.name', function ( e ) {
+        showUser( $(this).attr( 'user_id' ) );
+        return false;
+      });
+    });
+    
+    function showUser( id ) {
+      $.ajax({
+        url: '/users/read/' + id,
+        success: function ( user ) {
+          var user_table = ''
+            + '<table>'
+            + '<tr>'
+              + '<td>User: </td>'
+              + '<td>' + user.name + '</td>'
+            + '</tr>'
+            + '<tr>'
+              + '<td> ID: </td>'
+              + '<td>' + user._id + '</td>'
+            + '</tr>'
+            + '<tr>'
+              + '<td> Online? </td>'
+              + '<td>' + ( user.is_online ? 'Yes' : 'No' ) + '</td>'
+            + '</tr>'
+            + '</table>'
+          $('#user').html( user_table );
+        }
+      });
+      return false;
+    }
+
+    function loadUsers() {
+      $.ajax({
+        url: '/users/list',
+        success: function ( response ) {
+          var html = '';
+          for ( var a = 0; a < response.length; a++ ) {
+            html += '<a class="name" href="/users/read/' + response[a]._id + '" user_id="' + response[a]._id + '">' + response[a].name + '</a><br>';
+          }
+          $('#list').html( html );
+        }
+      });
+    }
+
+  </script>
+
+</head>
+<body>
+  <div id="list" style="float:left; margin-right: 20px"></div>
+  <div id="user"></div>
+</body>
+</html>

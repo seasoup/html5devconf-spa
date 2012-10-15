@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<!--
+  spa.html
+  spa application static html
+
+  Michael S. Mikowski - mike.mikowski@gmail.com
+  Copyright (c) 2011-2012 Manning Publications Co.
+-->
+
+<html>
+<head>
+  <title>SPA Starter</title>
+
+  <!-- stylesheets -->
+  <link rel="stylesheet" href="css/spa.css" type="text/css"/>
+  <link rel="stylesheet" href="css/spa.shell.css" type="text/css"/>
+
+  <!-- third-party javascript -->
+  <script src="js/jq/jquery-1.7.js"></script>
+  <script src="js/jq/jquery.address-1.4.js"></script>
+  <script src="js/jq/jquery.uriAnchor-1.1.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+
+  <!-- our javascript -->
+  <script src="js/spa.js"></script>
+  <script src="js/spa.butil.js"></script>
+  <script src="js/spa.shell.js"></script>
+  <script>
+    $(function (){ 
+      spa.initModule('#spa'); 
+      io.connect().on( 'script', function ( path ) {
+        $( 'head' ).append( '<script src="' + path + '"></scr' + 'ipt>' );
+          spa.shell.reload( $('#spa') );
+      });
+
+    });
+  </script>
+
+</head>
+<body>
+<div id="spa"></div>
+</body>
+</html>
