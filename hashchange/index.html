@@ -1,0 +1,19 @@
+<html>
+<head>
+  <title>Hashchange</title>
+  <script src="jquery.js"></script>
+  <script>
+    
+    $( function () {
+      $(window).bind('hashchange', function ( event ) {
+        $( '#hash' ).html( event.target.location.hash );
+      });
+      $(window).trigger('hashchange');
+    });
+    
+  </script>
+</head>
+<body>
+  <div id="hash"></div>
+</body>
+</html>
